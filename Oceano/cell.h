@@ -5,6 +5,9 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
+#include <string.h> //* for strtok
+
+#define DEL "\n\t \v\f\r"
 
 /*
 ** ANSI Color codes for terminal output formatting:
@@ -21,6 +24,8 @@
 #define RST 	"\033[0m"
 
 
-void Getcwd(char *, size_t); //? so we do not need to put variable name 
+void Getcwd(char *, size_t);
+void *Malloc(size_t size);
+void *Realloc(void *ptr, size_t size);
 
 #endif
