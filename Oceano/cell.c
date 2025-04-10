@@ -19,13 +19,13 @@ char **cell_split_line(char *line)
     size_t bufsize;
 
     bufsize = BUFSIZ;
-    tokens = Malloc(bufsize * sizeof(*tokens));
+    tokens = Malloc(bufsize * sizeof(*tokens)); //* allocat for takens 
     position = 0;
     for(char *token = strtok(line, DEL); token; token = strtok(NULL, DEL))
     {
         tokens[position++] = token;
-        if (position >= bufsize){
-            bufsize *= 2;
+        if (position >= bufsize){ //* if we have more than we allocated we realloc (~simple)
+            bufsize *= 2; //*with double bufsize 
             tokens = Realloc(tokens, bufsize * sizeof(*tokens));
         }
     }
@@ -43,9 +43,9 @@ char *cell_read_line(void)
     * getline() expects the pointer *buf to either be NULL (so it allocates memory itself)
     * OR point to a pre-allocated buffer.
     */
-    Getcwd(cwd, sizeof(cwd));
-    printf(C"%s"RST"$>", cwd);
-    if (getline(&buf, &bufsize, stdin) == -1)
+    // Getcwd(cwd, sizeof(cwd));
+    printf(C"minishell>"RST"$>");
+    if (getline(&buf, &bufsize, stdin) == -1) //! read on this 
     {
         free(buf);
         buf = NULL;
@@ -58,7 +58,7 @@ char *cell_read_line(void)
             printf(RED"[EOF]\n"RST);
         }
         else
-            printf(RED"Getline  function FAILED\n"RST);
+            printf(RED"Getline function FAILED\n"RST);
     }
     return (buf);
 }
@@ -71,14 +71,14 @@ int main(int ac, char **av)
     * 1️⃣ prompt + get line ✅
     * 2️⃣
     */
-   char *line;
-   char **args;
+   char *line; //* the input from promp as a hole
+   char **args; //* the input splited
 
    while ((line = cell_read_line())) //* while line != NULL -> != 0 -> !false = true
    {
-        args = cell_split_line(line);
+        args = cell_split_line(line);//* fill arg with splited line 
         for (int i = 0; args[i]; ++i){
-            printf("%s\n", args[i]);
+            printf("%s\n", args[i]); //* just for printing the output
         }
         /*
         * 3️⃣exec
@@ -89,3 +89,7 @@ int main(int ac, char **av)
    }
    return (EXIT_SUCCESS);
 }
+
+/*
+* Psodocode:
+*/
